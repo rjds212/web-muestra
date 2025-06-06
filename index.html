@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abogado Online Venezuela - Tu Solución Legal</title>
+    <!-- Tailwind CSS CDN para un diseño moderno y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter para una tipografía limpia y profesional -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- jsPDF library para la generación de PDF (mantengo por si se usa en el futuro, pero ya no es la opción principal de descarga) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Define la fuente Inter para todo el cuerpo del documento */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased; /* Mejora el suavizado de la fuente en WebKit/Blink */
+            -moz-osx-osx-font-smoothing: grayscale; /* Mejora el suavizado de la fuente en Firefox */
+        }
+        /* Estilos personalizados para la barra de desplazamiento para una mejor estética */
+        ::-webkit-scrollbar {
+            width: 8px; /* Ancho de la barra de desplazamiento */
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; /* Color de fondo de la pista de la barra de desplazamiento */
+            border-radius: 10px; /* Bordes redondeados para la pista */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888; /* Color del "pulgar" de la barra de desplazamiento */
+            border-radius: 10px; /* Bordes redondeados para el pulgar */
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555; /* Color del pulgar al pasar el ratón */
+        }
+        /* Clases de Tailwind que se aplicarán a los inputs generados dinámicamente */
+        .form-input {
+            @apply w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200;
+        }
+        /* Clase para justificar texto */
+        .text-justified {
+            text-align: justify;
+        }
+        /* Clase para centrar un elemento */
+        .text-centered {
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Encabezado de la página (Header) -->
+    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-lg py-4 px-6 md:px-12">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <!-- Logo o Nombre del Despacho -->
+            <a href="#inicio" class="text-3xl font-bold tracking-tight mb-4 md:mb-0">Abogado <span class="text-blue-200">Legal</span></a>
+            <!-- Menú de Navegación -->
+            <nav class="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2 text-lg">
+                <a href="#inicio" class="nav-link hover:text-blue-200 transition duration-300">Inicio</a>
+                <a href="#servicios" class="nav-link hover:text-blue-200 transition duration-300">Servicios Jurídicos</a>
+                <a href="#generador" class="nav-link hover:text-blue-200 transition duration-300">Generador de Contratos</a>
+                <a href="#nosotros" class="nav-link hover:text-blue-200 transition duration-300">Sobre Nosotros</a>
+                <a href="#contacto" class="nav-link hover:text-blue-200 transition duration-300">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenido Principal de la Página -->
+    <main>
+        <!-- Sección de Inicio (Home) -->
+        <section id="inicio" class="bg-white py-16 md:py-24 px-6 md:px-12 text-center shadow-inner">
+            <div class="container mx-auto">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
+                    Tu Asesoría Legal Confiable en <span class="text-blue-700">Venezuela</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-10">
+                    Ofrecemos soluciones jurídicas eficientes y personalizadas, adaptadas a la legislación venezolana, para individuos y empresas.
+                </p>
+                <!-- Botones de Llamada a la Acción -->
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#generador" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition duration-300">
+                        <i class="fas fa-file-contract mr-2"></i> Generar Contrato Ahora
+                    </a>
+                    <a href="#contacto" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition duration-300">
+                        <i class="fas fa-phone-alt mr-2"></i> Contáctanos
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Servicios Jurídicos -->
+        <section id="servicios" class="py-16 md:py-24 px-6 md:px-12 bg-gray-50">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-bold text-gray-900 mb-12">Nuestros Servicios Jurídicos</h2>
+                <!-- Cuadrícula de tarjetas de servicios -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Tarjeta de Servicio 1: Derecho Civil -->
+                    <div class="bg-white rounded-lg shadow-xl p-8 transform hover:scale-105 transition duration-300 border-b-4 border-blue-500">
+                        <i class="fas fa-gavel text-5xl text-blue-600 mb-6"></i>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Derecho Civil</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Asesoría y representación en contratos, propiedades, herencias, obligaciones y derechos personales.
+                        </p>
+                    </div>
+                    <!-- Tarjeta de Servicio 2: Derecho Mercantil -->
+                    <div class="bg-white rounded-lg shadow-xl p-8 transform hover:scale-105 transition duration-300 border-b-4 border-blue-500">
+                        <i class="fas fa-building text-5xl text-blue-600 mb-6"></i>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Derecho Mercantil</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Constitución de empresas, contratos mercantiles, fusiones y adquisiciones, patentes y marcas.
+                        </p>
+                    </div>
+                    <!-- Tarjeta de Servicio 3: Derecho Laboral -->
+                    <div class="bg-white rounded-lg shadow-xl p-8 transform hover:scale-105 transition duration-300 border-b-4 border-blue-500">
+                        <i class="fas fa-briefcase text-5xl text-blue-600 mb-6"></i>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Derecho Laboral</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Asesoría en relaciones laborales, despidos, prestaciones sociales y contratos de trabajo.
+                        </p>
+                    </div>
+                    <!-- Tarjeta de Servicio 4: Derecho Inmobiliario -->
+                    <div class="bg-white rounded-lg shadow-xl p-8 transform hover:scale-105 transition duration-300 border-b-4 border-blue-500">
+                        <i class="fas fa-hand-holding-dollar text-5xl text-blue-600 mb-6"></i>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Derecho Inmobiliario</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Compra-venta de inmuebles, arrendamientos, estudios de títulos y registro de propiedades.
+                        </p>
+                    </div>
+                    <!-- Tarjeta de Servicio 5: Derecho Familiar -->
+                    <div class="bg-white rounded-lg shadow-xl p-8 transform hover:scale-105 transition duration-300 border-b-4 border-blue-500">
+                        <i class="fas fa-user-friends text-5xl text-blue-600 mb-6"></i>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Derecho Familiar</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Divorcios, uniones estables de hecho, régimen de visitas, manutención y patria potestad.
+                        </p>
+                    </div>
+                    <!-- Tarjeta de Servicio 6: Litigio y Mediación -->
+                    <div class="bg-white rounded-lg shadow-xl p-8 transform hover:scale-105 transition duration-300 border-b-4 border-blue-500">
+                        <i class="fas fa-scale-balanced text-5xl text-blue-600 mb-6"></i>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Litigio y Mediación</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Representación en juicios, resolución de conflictos y mediación para evitar procesos judiciales.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección del Generador de Contratos -->
+        <section id="generador" class="py-16 md:py-24 px-6 md:px-12 bg-white">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-bold text-gray-900 mb-12">Generador de Contratos</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+                    Rellena el siguiente formulario para generar contratos básicos adaptados a las leyes venezolanas.
+                    <strong class="text-red-600">
+                        NOTA IMPORTANTE: Estos contratos son plantillas básicas. Siempre recomendamos la asesoría legal
+                        personalizada para casos complejos o específicos y para la revisión de las cláusulas.
+                    </strong>
+                </p>
+
+                <div class="bg-gray-50 rounded-lg shadow-xl p-8 max-w-4xl mx-auto border-t-4 border-blue-600">
+                    <div class="mb-6 text-left">
+                        <label for="contractType" class="block text-gray-700 text-lg font-semibold mb-2">Selecciona el Tipo de Contrato:</label>
+                        <select id="contractType" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200">
+                            <option value="">-- Selecciona --</option>
+                            <option value="arrendamiento">Contrato de Arrendamiento</option>
+                            <option value="compraVenta">Contrato de Compra-Venta (Privado)</option>
+                            <!-- Puedes añadir más tipos de contratos aquí -->
+                        </select>
+                    </div>
+
+                    <!-- Aquí se cargarán dinámicamente los campos del formulario según el tipo de contrato -->
+                    <div id="contractForm" class="hidden text-left">
+                        <!-- Los campos del formulario se insertarán aquí por JavaScript -->
+                    </div>
+
+                    <!-- Botón para generar el contrato -->
+                    <button id="generateContractBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition duration-300 mt-8">
+                        <i class="fas fa-cogs mr-2"></i> Generar Contrato
+                    </button>
+
+                    <!-- Área para mostrar el contrato generado -->
+                    <div id="contractOutput" class="hidden mt-8 p-6 bg-white border border-gray-300 rounded-md shadow-inner text-sm leading-relaxed max-h-96 overflow-y-auto">
+                        <!-- El texto del contrato generado aparecerá aquí -->
+                    </div>
+
+                    <!-- Contenedor para botones de acción -->
+                    <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6">
+                        <button id="editContractBtn" class="hidden bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition duration-300">
+                            <i class="fas fa-edit mr-2"></i> Editar Contrato
+                        </button>
+                        <button id="downloadWordBtn" class="hidden bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition duration-300">
+                            <i class="fas fa-file-word mr-2"></i> Descargar Word
+                        </button>
+                    </div>
+
+                    <!-- Caja de mensajes para el usuario -->
+                    <div id="messageBox" class="hidden mt-6 p-4 rounded-md text-sm" role="alert">
+                        <!-- Mensajes personalizados aparecerán aquí (ej. errores, éxito) -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección "Sobre Nosotros" -->
+        <section id="nosotros" class="py-16 md:py-24 px-6 md:px-12 bg-gray-50">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-bold text-gray-900 mb-12">Sobre Nosotros</h2>
+                <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-xl p-8 border-t-4 border-indigo-600">
+                    <!-- Imagen de placeholder para tu foto/logo -->
+                    <img src="https://placehold.co/150x150/1e3a8a/ffffff?text=Tu+Foto" alt="Foto del Abogado" class="rounded-full mx-auto mb-6 shadow-md border-4 border-blue-300">
+                    <h3 class="text-3xl font-semibold text-gray-800 mb-4">Dr. [Tu Nombre Completo]</h3>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        Soy un abogado venezolano con más de 15 años de experiencia en diversas ramas del derecho,
+                        especializado en la creación de soluciones legales prácticas y accesibles para mis clientes.
+                        Mi compromiso es brindar una asesoría transparente, eficiente y adaptada a la dinámica legal
+                        actual de Venezuela.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        Mi misión es facilitar el acceso a servicios jurídicos de calidad, garantizando la seguridad
+                        y tranquilidad en cada trámite legal.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Contacto -->
+        <section id="contacto" class="py-16 md:py-24 px-6 md:px-12 bg-white">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-bold text-gray-900 mb-12">Contáctanos</h2>
+                <div class="max-w-2xl mx-auto bg-gray-50 rounded-lg shadow-xl p-8 border-t-4 border-blue-600">
+                    <p class="text-lg text-gray-700 mb-6">
+                        ¿Tienes alguna consulta o necesitas asesoría personalizada? No dudes en contactarnos.
+                    </p>
+                    <!-- Información de contacto -->
+                    <div class="flex flex-col gap-4 mb-8 text-gray-800 text-left">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-phone-alt text-blue-600 text-2xl"></i>
+                            <span class="text-lg">+58 (412) 123-4567</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-blue-600 text-2xl"></i>
+                            <span class="text-lg">info@tudespacholegal.com</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-map-marker-alt text-blue-600 text-2xl"></i>
+                            <span class="text-lg">Av. Principal, Edificio Legal, Piso 5, Oficina 501, Caracas, Venezuela.</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-clock text-blue-600 text-2xl"></i>
+                            <span class="text-lg">Lunes a Viernes: 9:00 AM - 5:00 PM</span>
+                        </div>
+                    </div>
+
+                    <!-- Formulario de Contacto -->
+                    <form id="contactForm" class="space-y-4">
+                        <div>
+                            <label for="name" class="sr-only">Nombre</label>
+                            <input type="text" id="name" name="name" placeholder="Tu Nombre Completo" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        </div>
+                        <div>
+                            <label for="email" class="sr-only">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Tu Correo Electrónico" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        </div>
+                        <div>
+                            <label for="subject" class="sr-only">Asunto</label>
+                            <input type="text" id="subject" name="subject" placeholder="Asunto" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        </div>
+                        <div>
+                            <label for="message" class="sr-only">Mensaje</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Tu Mensaje" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                        </div>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition duration-300">
+                            <i class="fas fa-paper-plane mr-2"></i> Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Editing Modal/Area -->
+    <div id="editModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl h-full md:h-auto overflow-hidden flex flex-col">
+            <div class="p-6 border-b border-gray-200">
+                <h3 class="text-2xl font-bold text-gray-800">Editar Contrato</h3>
+                <p class="text-gray-600 text-sm mt-2">Realiza tus ediciones. El formato de justificación y centrado se aplicará al guardar.</p>
+            </div>
+            <textarea id="editContractTextarea" class="flex-grow w-full p-6 text-gray-800 font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            <div class="p-6 border-t border-gray-200 flex flex-col sm:flex-row justify-end gap-4">
+                <button id="cancelEditBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-6 rounded-full transition duration-300">
+                    Cancelar
+                </button>
+                <button id="saveEditBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full transition duration-300">
+                    Guardar Ediciones y Previsualizar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript para el desplazamiento suave (smooth scrolling) al hacer clic en los enlaces del menú
+        document.querySelectorAll('a.nav-link[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); // Evita el comportamiento de anclaje por defecto
+                // Desplaza la vista al elemento con el ID correspondiente
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth' // Habilita el desplazamiento suave
+                });
+            });
+        });
+
+        // Obtener referencias a los elementos del generador de contratos
+        const contractTypeSelect = document.getElementById('contractType'); // Selector de tipo de contrato
+        const contractFormDiv = document.getElementById('contractForm'); // Contenedor del formulario dinámico
+        const generateContractBtn = document.getElementById('generateContractBtn'); // Botón para generar contrato
+        const contractOutputDiv = document.getElementById('contractOutput'); // Área para mostrar el contrato generado
+        const downloadWordBtn = document.getElementById('downloadWordBtn'); // Botón para descargar Word (antes downloadPdfBtn)
+        const editContractBtn = document.getElementById('editContractBtn'); // Nuevo botón para editar contrato
+        const messageBox = document.getElementById('messageBox'); // Caja de mensajes para el usuario
+
+        // Referencias a los elementos del modal de edición
+        const editModal = document.getElementById('editModal');
+        const editContractTextarea = document.getElementById('editContractTextarea');
+        const cancelEditBtn = document.getElementById('cancelEditBtn');
+        const saveEditBtn = document.getElementById('saveEditBtn');
+
+        let currentRawContractText = ''; // Almacena el texto plano del contrato generado/editado
+        let currentContractType = ''; // Almacena el tipo de contrato actualmente seleccionado
+
+        /**
+         * Muestra una caja de mensajes personalizada en la interfaz.
+         * @param {string} message - El mensaje a mostrar.
+         * @param {string} type - El tipo de mensaje (ej. 'success', 'error', 'info'). Define los estilos.
+         */
+        function showMessageBox(message, type) {
+            messageBox.textContent = message; // Establece el texto del mensaje
+            // Reinicia las clases y oculta el mensaje antes de aplicar las nuevas
+            messageBox.className = 'mt-6 p-4 rounded-md text-sm';
+            messageBox.classList.remove('hidden');
+
+            // Aplica estilos según el tipo de mensaje
+            switch (type) {
+                case 'success':
+                    messageBox.classList.add('bg-green-100', 'text-green-800');
+                    break;
+                case 'error':
+                    messageBox.classList.add('bg-red-100', 'text-red-800');
+                    break;
+                case 'info':
+                    messageBox.classList.add('bg-blue-100', 'text-blue-800');
+                    break;
+                default: // Estilo por defecto si el tipo no es reconocido
+                    messageBox.classList.add('bg-gray-100', 'text-gray-800');
+            }
+            // Oculta el mensaje después de 5 segundos
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 5000);
+        }
+
+        /**
+         * Extrae las partes (título, cuerpo principal, firmas) de un contrato en texto plano.
+         * @param {string} rawText El texto completo del contrato.
+         * @param {string} type El tipo de contrato ('arrendamiento' o 'compraVenta').
+         * @returns {{title: string, mainBody: string, signatures: string}} Las partes del contrato.
+         */
+        function getContractParts(rawText, type) {
+            let title = '';
+            let mainBody = '';
+            let signatures = '';
+
+            if (type === 'compraVenta') {
+                title = "CONTRATO DE COMPRA-VENTA PRIVADA";
+                const parts = rawText.split('Al finalizar el presente documento abajo firman el comprador, vendedor y los testigos.');
+                mainBody = parts[0] ? parts[0].replace(title + '\n', '').trim() : '';
+                signatures = parts[1] ? 'Al finalizar el presente documento abajo firman el comprador, vendedor y los testigos.\n\n' + parts[1] : '';
+            } else if (type === 'arrendamiento') {
+                title = "CONTRATO DE ARRENDAMIENTO";
+                // Encuentra el índice de la primera línea de firma para dividir el cuerpo principal de las firmas
+                const signatureStartDelimiter = '_________________________';
+                const signatureStartIndex = rawText.indexOf(signatureStartDelimiter);
+
+                if (signatureStartIndex !== -1) {
+                    mainBody = rawText.substring(0, signatureStartIndex).replace(title + '\n\n', '').trim();
+                    signatures = rawText.substring(signatureStartIndex).trim();
+                } else {
+                    mainBody = rawText.replace(title + '\n\n', '').trim();
+                }
+            }
+            return { title, mainBody, signatures };
+        }
+
+        /**
+         * Renders the contract text into the HTML display area, applying formatting.
+         * @param {string} rawText - The raw contract text.
+         * @param {string} type - The type of contract (e.g., 'compraVenta', 'arrendamiento').
+         */
+        function renderContractOutput(rawText, type) {
+            let finalOutputHtml = '';
+            // Limpiar cualquier clase de justificación/centrado anterior en el contenedor principal
+            contractOutputDiv.classList.remove('text-left', 'text-justify', 'text-centered'); 
+
+            const { title, mainBody, signatures } = getContractParts(rawText, type);
+
+            // Reemplazamos múltiples espacios y saltos de línea por un solo espacio para una justificación continua del cuerpo principal.
+            const formattedMainBody = mainBody.replace(/\s+/g, ' ').trim();
+
+            finalOutputHtml = `
+                <p class="font-bold text-lg mb-4 text-center">${title}</p>
+                <p class="text-justify mb-4 text-sm leading-relaxed">${formattedMainBody}</p>
+                <div class="mt-8 text-center text-xs md:text-sm">
+                    ${signatures.split('\n').filter(line => line.trim() !== '').map(line => `<p>${line}</p>`).join('')}
+                </div>
+            `;
+            contractOutputDiv.innerHTML = finalOutputHtml;
+            
+            contractOutputDiv.classList.remove('hidden'); // Asegura que el área de salida sea visible
+            downloadWordBtn.classList.remove('hidden'); // Asegura que el botón de descarga sea visible
+            editContractBtn.classList.remove('hidden'); // Asegura que el botón de edición sea visible
+            generateContractBtn.textContent = 'Regenerar Contrato'; // Cambia el texto del botón de generar
+        }
+
+        /**
+         * Carga los campos de formulario apropiados basándose en el tipo de contrato seleccionado.
+         */
+        contractTypeSelect.addEventListener('change', () => {
+            currentContractType = contractTypeSelect.value; // Actualiza el tipo de contrato actual
+            contractFormDiv.innerHTML = ''; // Limpia el formulario anterior
+            contractOutputDiv.classList.add('hidden'); // Oculta la salida del contrato
+            downloadWordBtn.classList.add('hidden'); // Oculta el botón de descargar
+            editContractBtn.classList.add('hidden'); // Oculta el botón de editar
+            generateContractBtn.classList.remove('hidden'); // Muestra el botón de generar (volverá a ser 'Generar Contrato')
+            generateContractBtn.textContent = 'Generar Contrato'; // Reset text
+            showMessageBox('', ''); // Limpia cualquier mensaje anterior
+
+            // Lógica para cargar diferentes formularios según el tipo de contrato
+            if (currentContractType === 'arrendamiento') {
+                contractFormDiv.innerHTML = `
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6">Datos para Contrato de Arrendamiento</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="arrendamiento_fecha" class="block text-gray-700 text-sm font-bold mb-2">Fecha del Contrato:</label>
+                            <input type="date" id="arrendamiento_fecha" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="arrendador_nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre del Arrendador:</label>
+                            <input type="text" id="arrendador_nombre" placeholder="Juan Pérez" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="arrendador_cedula" class="block text-gray-700 text-sm font-bold mb-2">Cédula/RIF Arrendador:</label>
+                            <input type="text" id="arrendador_cedula" placeholder="V-12345678" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="arrendador_direccion" class="block text-gray-700 text-sm font-bold mb-2">Dirección del Arrendador:</label>
+                            <input type="text" id="arrendador_direccion" placeholder="Calle Real, Edif. A, Apt. B" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="arrendatario_nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre del Arrendatario:</label>
+                            <input type="text" id="arrendatario_nombre" placeholder="María González" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="arrendatario_cedula" class="block text-gray-700 text-sm font-bold mb-2">Cédula/RIF Arrendatario:</label>
+                            <input type="text" id="arrendatario_cedula" placeholder="V-87654321" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="arrendatario_direccion" class="block text-gray-700 text-sm font-bold mb-2">Dirección del Arrendatario:</label>
+                            <input type="text" id="arrendatario_direccion" placeholder="Av. Siempre Viva, Casa #7" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="inmueble_descripcion" class="block text-gray-700 text-sm font-bold mb-2">Descripción del Inmueble:</label>
+                            <textarea id="inmueble_descripcion" rows="3" placeholder="Apartamento ubicado en..." class="form-input" required></textarea>
+                        </div>
+                        <div>
+                            <label for="canon_arrendamiento" class="block text-gray-700 text-sm font-bold mb-2">Canon de Arrendamiento (USD):</label>
+                            <input type="number" id="canon_arrendamiento" placeholder="500" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="plazo_meses" class="block text-gray-700 text-sm font-bold mb-2">Plazo (Meses):</label>
+                            <input type="number" id="plazo_meses" placeholder="12" class="form-input" required>
+                        </div>
+                    </div>
+                `;
+                generateContractBtn.classList.remove('hidden'); // Muestra el botón de generar
+                contractFormDiv.classList.remove('hidden'); // Muestra el formulario
+            } else if (currentContractType === 'compraVenta') {
+                contractFormDiv.innerHTML = `
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6">Datos para Contrato de Compra-Venta Privado</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="compraVenta_fecha" class="block text-gray-700 text-sm font-bold mb-2">Fecha del Contrato:</label>
+                            <input type="date" id="compraVenta_fecha" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="compraVenta_ciudad_firma" class="block text-gray-700 text-sm font-bold mb-2">Ciudad de Firma:</label>
+                            <input type="text" id="compraVenta_ciudad_firma" placeholder="Ciudad" class="form-input" required>
+                        </div>
+                        <!-- Datos del Vendedor -->
+                        <div class="col-span-full"><h4 class="text-xl font-semibold text-gray-700 mt-4 mb-2">Datos del Vendedor</h4></div>
+                        <div>
+                            <label for="vendedor_nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre del Vendedor:</label>
+                            <input type="text" id="vendedor_nombre" placeholder="Nombre Completo" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="vendedor_cedula" class="block text-gray-700 text-sm font-bold mb-2">Cédula/RIF Vendedor:</label>
+                            <input type="text" id="vendedor_cedula" placeholder="V-12345678" class="form-input" required>
+                        </div>
+                        <div class="col-span-full">
+                            <label for="vendedor_domicilio" class="block text-gray-700 text-sm font-bold mb-2">Domicilio del Vendedor:</label>
+                            <input type="text" id="vendedor_domicilio" placeholder="Direccion,Ciudad, Municipio, Estado" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="vendedor_telefono" class="block text-gray-700 text-sm font-bold mb-2">Teléfono del Vendedor:</label>
+                            <input type="text" id="vendedor_telefono" placeholder="04" class="form-input">
+                        </div>
+                        <div>
+                            <label for="vendedor_email" class="block text-gray-700 text-sm font-bold mb-2">Email del Vendedor:</label>
+                            <input type="email" id="vendedor_email" placeholder="Correo" class="form-input">
+                        </div>
+                        
+                        <!-- Datos del Comprador -->
+                        <div class="col-span-full"><h4 class="text-xl font-semibold text-gray-700 mt-4 mb-2">Datos del Comprador</h4></div>
+                        <div>
+                            <label for="comprador_nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre del Comprador:</label>
+                            <input type="text" id="comprador_nombre" placeholder="Nombre Completo" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="comprador_cedula" class="block text-gray-700 text-sm font-bold mb-2">Cédula/RIF Comprador:</label>
+                            <input type="text" id="comprador_cedula" placeholder="V-12345678" class="form-input" required>
+                        </div>
+                        <div class="col-span-full">
+                            <label for="comprador_domicilio" class="block text-gray-700 text-sm font-bold mb-2">Domicilio del Comprador:</label>
+                            <input type="text" id="comprador_domicilio" placeholder="Direccion,Ciudad, Municipio, Estado" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="comprador_telefono" class="block text-gray-700 text-sm font-bold mb-2">Teléfono del Comprador:</label>
+                            <input type="text" id="comprador_telefono" placeholder="04" class="form-input">
+                        </div>
+                        <div>
+                            <label for="comprador_email" class="block text-gray-700 text-sm font-bold mb-2">Email del Comprador:</label>
+                            <input type="email" id="comprador_email" placeholder="Correo" class="form-input">
+                        </div>
+
+                        <!-- Datos del Bien -->
+                        <div class="col-span-full"><h4 class="text-xl font-semibold text-gray-700 mt-4 mb-2">Datos del Bien Inmueble</h4></div>
+                        <div class="col-span-full">
+                            <label for="bien_descripcion_detallada" class="block text-gray-700 text-sm font-bold mb-2">Descripción Detallada (linderos, dependencias, número catastral):</label>
+                            <textarea id="bien_descripcion_detallada" rows="6" placeholder="Ej: Un (1) Bien inmueble, de mi legitima propiedad, constituido por Una Parcela de Terreno y la Casa sobre ella construida, ubicada en..." class="form-input" required></textarea>
+                        </div>
+                        <div>
+                            <label for="precio_venta" class="block text-gray-700 text-sm font-bold mb-2">Precio de Venta (USD):</label>
+                            <input type="number" id="precio_venta" placeholder="1.000" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="condiciones_pago" class="block text-gray-700 text-sm font-bold mb-2">Condiciones de Pago:</label>
+                            <input type="text" id="condiciones_pago" placeholder="en efectivo" class="form-input" required>
+                        </div>
+                        
+                        <!-- Datos de los Testigos -->
+                        <div class="col-span-full"><h4 class="text-xl font-semibold text-gray-700 mt-4 mb-2">Datos de los Testigos</h4></div>
+                        <div>
+                            <label for="testigo1_nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre Testigo 1:</label>
+                            <input type="text" id="testigo1_nombre" placeholder="Nombre Completo Testigo 1" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="testigo1_cedula" class="block text-gray-700 text-sm font-bold mb-2">Cédula Testigo 1:</label>
+                            <input type="text" id="testigo1_cedula" placeholder="V-12345678" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="testigo2_nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre Testigo 2:</label>
+                            <input type="text" id="testigo2_nombre" placeholder="Nombre Completo Testigo 2" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="testigo2_cedula" class="block text-gray-700 text-sm font-bold mb-2">Cédula Testigo 2:</label>
+                            <input type="text" id="testigo2_cedula" placeholder="V-12345678" class="form-input" required>
+                        </div>
+                    </div>
+                `;
+                contractFormDiv.classList.remove('hidden'); // Muestra el formulario
+            } else {
+                // Si no se selecciona un tipo válido, oculta todo
+                contractFormDiv.classList.add('hidden');
+                generateContractBtn.classList.add('hidden'); // Oculta el botón de generar si no hay tipo seleccionado
+            }
+        });
+
+        // Escucha eventos de 'input' en el cuerpo del documento para aplicar clases de Tailwind
+        // a los inputs que se añaden dinámicamente. Esto asegura que los inputs siempre tengan el estilo correcto.
+        document.body.addEventListener('input', (e) => {
+            if (e.target.classList.contains('form-input')) {
+                // Aplica las clases de Tailwind definidas en .form-input si el elemento tiene esa clase
+                e.target.classList.add('w-full', 'p-3', 'border', 'border-gray-300', 'rounded-md', 'focus:ring-2', 'focus:ring-blue-500', 'focus:border-blue-500', 'transition', 'duration-200');
+            }
+        });
+
+        /**
+         * Genera el texto del contrato basándose en los datos ingresados en el formulario.
+         * Guarda el texto plano en currentRawContractText y luego lo renderiza en el HTML.
+         */
+        generateContractBtn.addEventListener('click', () => {
+            const selectedType = contractTypeSelect.value;
+            let generatedRawText = ''; // Variable temporal para el texto generado
+            let allFieldsFilled = true;
+            // Selecciona todos los inputs y textareas dentro del formulario dinámico
+            let formInputs = contractFormDiv.querySelectorAll('.form-input[required]'); // Solo valida los campos requeridos
+
+            // Validación básica: comprueba si todos los campos requeridos están llenos
+            formInputs.forEach(input => {
+                if (!input.value.trim()) { // Si el campo está vacío después de quitar espacios
+                    allFieldsFilled = false;
+                    input.classList.add('border-red-500'); // Resalta los campos vacíos en rojo
+                } else {
+                    input.classList.remove('border-red-500'); // Quita el resaltado si el campo está lleno
+                }
+            });
+
+            if (!allFieldsFilled) {
+                showMessageBox('Por favor, rellena todos los campos obligatorios.', 'error');
+                contractOutputDiv.classList.add('hidden');
+                downloadWordBtn.classList.add('hidden');
+                editContractBtn.classList.add('hidden');
+                return; // Detiene la ejecución si hay campos vacíos
+            }
+
+            try {
+                if (selectedType === 'arrendamiento') {
+                    const fecha = document.getElementById('arrendamiento_fecha').value;
+                    const arrendadorNombre = document.getElementById('arrendador_nombre').value;
+                    const arrendadorCedula = document.getElementById('arrendador_cedula').value;
+                    const arrendadorDireccion = document.getElementById('arrendador_direccion').value;
+                    const arrendatarioNombre = document.getElementById('arrendatario_nombre').value;
+                    const arrendatarioCedula = document.getElementById('arrendatario_cedula').value;
+                    const arrendatarioDireccion = document.getElementById('arrendatario_direccion').value;
+                    const inmuebleDescripcion = document.getElementById('inmueble_descripcion').value;
+                    const canonArrendamiento = document.getElementById('canon_arrendamiento').value;
+                    const plazoMeses = document.getElementById('plazo_meses').value;
+
+                    // Generar el texto crudo para arrendamiento
+                    generatedRawText = `CONTRATO DE ARRENDAMIENTO
+
+Entre:
+
+Por una parte, ${arrendadorNombre}, titular de la Cédula de Identidad No. ${arrendadorCedula}, domiciliado en ${arrendadorDireccion}, en lo adelante "EL ARRENDADOR".
+
+Y por la otra parte, ${arrendatarioNombre}, titular de la Cédula de Identidad No. ${arrendatarioCedula}, domiciliado en ${arrendatarioDireccion}, en lo adelante "EL ARRENDATARIO".
+
+Se ha convenido en celebrar como en efecto se celebra, el presente CONTRATO DE ARRENDAMIENTO, el cual se regirá por las cláusulas siguientes y por las disposiciones de la Ley de Arrendamientos Inmobiliarios vigente en Venezuela:
+
+CLÁUSULA PRIMERA: OBJETO
+EL ARRENDADOR da en arrendamiento a EL ARRENDATARIO, el inmueble ubicado en: ${inmuebleDescripcion}.
+
+CLÁUSULA SEGUNDA: CANON DE ARRENDAMIENTO
+El canon de arrendamiento mensual será de USD ${canonArrendamiento}, pagaderos dentro de los primeros cinco (5) días de cada mes.
+
+CLÁUSULA TERCERA: PLAZO
+El presente contrato tendrá una duración de ${plazoMeses} (${plazoMeses}) meses, contados a partir de la fecha de su firma.
+
+CLÁUSULA CUARTA: DESTINO
+El inmueble será destinado exclusivamente para vivienda/uso comercial (elegir según el caso).
+
+CLÁUSULA QUINTA: MANTENIMIENTO Y REPARACIONES
+(Aquí irían cláusulas detalladas sobre quién se encarga de las reparaciones menores y mayores, y el mantenimiento general, según la ley venezolana y el acuerdo entre las partes. ¡PERSONALIZA ESTO!)
+
+CLÁUSULA SEXTA: ENTREGA Y RECEPCIÓN
+(Aquí irían cláusulas sobre el estado en que se entrega el inmueble, inventario, y la obligación del arrendatario de devolverlo en el mismo estado. ¡PERSONALIZA ESTO!)
+
+CLÁUSULA SÉPTIMA: CAUSAS DE TERMINACIÓN
+(Aquí irían las causas de terminación anticipada del contrato, según lo permitido por la Ley de Arrendamientos Inmobiliarios. ¡PERSONALIZA ESTO!)
+
+CLÁUSULA OCTAVA: JURISDICCIÓN
+Para todos los efectos derivados del presente contrato, las partes eligen como domicilio especial la ciudad de [Ciudad, ej. Caracas], y se someten a la jurisdicción de sus tribunales competentes.
+
+En [Ciudad], a los ${new Date(fecha).getDate()} días del mes de ${new Date(fecha).toLocaleString('es-ES', { month: 'long' })} de ${new Date(fecha).getFullYear()}.
+
+_________________________
+EL ARRENDADOR
+C.I. ${arrendadorCedula}
+
+_________________________
+EL ARRENDATARIO
+C.I. ${arrendatarioCedula}
+`;
+                } else if (selectedType === 'compraVenta') {
+                    const fecha = document.getElementById('compraVenta_fecha').value;
+                    const ciudadFirma = document.getElementById('compraVenta_ciudad_firma').value;
+                    const vendedorNombre = document.getElementById('vendedor_nombre').value;
+                    const vendedorCedula = document.getElementById('vendedor_cedula').value;
+                    const vendedorDomicilio = document.getElementById('vendedor_domicilio').value;
+                    const vendedorTelefono = document.getElementById('vendedor_telefono').value;
+                    const vendedorEmail = document.getElementById('vendedor_email').value;
+                    const compradorNombre = document.getElementById('comprador_nombre').value;
+                    const compradorCedula = document.getElementById('comprador_cedula').value;
+                    const compradorDomicilio = document.getElementById('comprador_domicilio').value;
+                    const compradorTelefono = document.getElementById('comprador_telefono').value;
+                    const compradorEmail = document.getElementById('comprador_email').value;
+                    const bienDescripcionDetallada = document.getElementById('bien_descripcion_detallada').value;
+                    const precioVenta = document.getElementById('precio_venta').value;
+                    const condicionesPago = document.getElementById('condiciones_pago').value;
+                    const testigo1Nombre = document.getElementById('testigo1_nombre').value;
+                    const testigo1Cedula = document.getElementById('testigo1_cedula').value;
+                    const testigo2Nombre = document.getElementById('testigo2_nombre').value;
+                    const testigo2Cedula = document.getElementById('testigo2_cedula').value;
+
+                    // Generar el texto crudo para compra-venta
+                    generatedRawText = `CONTRATO DE COMPRA-VENTA PRIVADA
+Yo, ${vendedorNombre}, venezolano(a) mayor de edad, civilmente hábil, titular de la Cedula de Identidad N° ${vendedorCedula}${vendedorTelefono ? `, teléfono ${vendedorTelefono}` : ''}${vendedorEmail ? `, correo electrónico ${vendedorEmail}` : ''} y domiciliado(a) en ${vendedorDomicilio}, declaro por medio del presente documento de VENTA PRIVADA; doy en venta pura y simple perfecta e irrevocable al ciudadano(a): ${compradorNombre}, venezolana, mayor de edad, titular de la Cedula de ldentidad N° ${compradorCedula}${compradorTelefono ? `, teléfono ${compradorTelefono}` : ''}${compradorEmail ? `, correo electrónico ${compradorEmail}` : ''} y domiciliada(a) en ${compradorDomicilio}; Un (1) ${bienDescripcionDetallada}. El precio de la venta aquí convenido es por la cantidad de SIETE MIL CIEN DÓLARES AMERICANOS, (USD ${precioVenta}), que declaro haber recibido en este acto, a mi entera y cabal satisfacción de manos del comprador, ${condicionesPago}. El presente documento de compra-venta privada que convienen entre las partes se firma en presencia de dos testigos para darle el fiel cumplimiento a lo establecido en el CÓDIGO CIVIL VENEZOLANO en el Articulo 1474 y 1160, cuyas copias de cédula de identidad se anexan; con el otorgamiento de la presente escritura hago al comprador la tradición de ley, y en virtud le transfiero la propiedad, dominio, posesión y demás derechos que me puedan corresponder sobre el BIEN INMUEBLE, objeto de la presente venta, el cual se encuentra libre de gravamen y multa, y nada adeuda por concepto de impuestos Nacionales, Estadales y municipales, obligándome al saneamiento de Ley. Y Yo, ${compradorNombre}, ut Supra identificado(a), declaro: Que acepto la VENTA PRIVADA, que se me hace por medio del presente documento en sus términos expuestos.
+En ${ciudadFirma}, Estado Bolívar a la fecha de su presentación, a los ${new Date(fecha).getDate()} días del mes de ${new Date(fecha).toLocaleString('es-ES', { month: 'long' })} de ${new Date(fecha).getFullYear()}.
+
+Al finalizar el presente documento abajo firman el comprador, vendedor y los testigos.
+
+_______________________________________
+${vendedorNombre.toUpperCase()}
+C.I. ${vendedorCedula}
+VENDEDOR
+
+_______________________________________
+${compradorNombre.toUpperCase()}
+C.I. ${compradorCedula}
+COMPRADORA
+
+TESTIGOS:
+_______________________________________
+${testigo1Nombre.toUpperCase()}
+C.I. ${testigo1Cedula}
+TESTIGO 1
+
+_______________________________________
+${testigo2Nombre.toUpperCase()}
+C.I. ${testigo2Cedula}
+TESTIGO 2
+`;
+                } else {
+                    showMessageBox('Por favor, selecciona un tipo de contrato válido para generar.', 'info');
+                    return;
+                }
+                
+                currentRawContractText = generatedRawText; // Almacena el texto plano generado
+                renderContractOutput(currentRawContractText, selectedType); // Renderiza el texto en HTML
+                showMessageBox('¡Contrato generado con éxito! Revísalo y descárgalo.', 'success');
+
+            } catch (error) {
+                console.error("Error al generar el contrato:", error);
+                showMessageBox('Ocurrió un error al generar el contrato. Por favor, inténtalo de nuevo.', 'error');
+            }
+        });
+
+        /**
+         * Manejador del botón "Editar Contrato". Abre el modal de edición.
+         */
+        editContractBtn.addEventListener('click', () => {
+            editContractTextarea.value = currentRawContractText; // Carga el texto plano en el textarea
+            editModal.classList.remove('hidden'); // Muestra el modal
+            // Oculta los elementos principales de la sección de generador de contratos
+            contractFormDiv.classList.add('hidden');
+            contractOutputDiv.classList.add('hidden');
+            generateContractBtn.classList.add('hidden');
+            downloadWordBtn.classList.add('hidden');
+            editContractBtn.classList.add('hidden');
+            messageBox.classList.add('hidden'); // Oculta el mensaje principal
+        });
+
+        /**
+         * Manejador del botón "Cancelar Edición". Cierra el modal y restablece la vista.
+         */
+        cancelEditBtn.addEventListener('click', () => {
+            editModal.classList.add('hidden'); // Oculta el modal
+            // Muestra los elementos principales de la sección de generador de contratos
+            contractFormDiv.classList.remove('hidden');
+            contractOutputDiv.classList.remove('hidden'); // La salida del contrato debe ser visible de nuevo
+            generateContractBtn.classList.remove('hidden');
+            downloadWordBtn.classList.remove('hidden');
+            editContractBtn.classList.remove('hidden');
+            showMessageBox('Edición cancelada.', 'info');
+        });
+
+        /**
+         * Manejador del botón "Guardar Ediciones y Previsualizar".
+         * Actualiza el texto del contrato con las ediciones y lo renderiza de nuevo.
+         */
+        saveEditBtn.addEventListener('click', () => {
+            currentRawContractText = editContractTextarea.value; // Actualiza el texto plano con las ediciones
+            editModal.classList.add('hidden'); // Oculta el modal
+
+            // Vuelve a renderizar el contrato con el texto editado
+            renderContractOutput(currentRawContractText, currentContractType);
+
+            // Muestra los elementos principales de la sección de generador de contratos
+            contractFormDiv.classList.remove('hidden');
+            generateContractBtn.classList.remove('hidden');
+            showMessageBox('Contrato editado y previsualizado. Ahora puedes descargarlo.', 'success');
+        });
+
+
+        /**
+         * Descarga el contrato generado como un archivo Word (.doc).
+         * La justificación y centrado se aplica dentro del HTML generado para el .doc.
+         */
+        downloadWordBtn.addEventListener('click', () => {
+            if (!currentRawContractText) {
+                showMessageBox('No hay contrato para descargar. Por favor, genera uno primero.', 'info');
+                return;
+            }
+
+            try {
+                let htmlContent = '';
+                const { title, mainBody, signatures } = getContractParts(currentRawContractText, currentContractType);
+
+                // Reemplazamos múltiples espacios y saltos de línea por un solo espacio para una justificación continua del cuerpo principal.
+                const formattedMainBody = mainBody.replace(/\s+/g, ' ').trim();
+
+                // Generar el HTML para el archivo Word, aplicando estilos CSS directamente en línea
+                htmlContent = `
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <style>
+                            body { font-family: 'Times New Roman', serif; margin: 1in; }
+                            p { margin-bottom: 0.1in; text-align: justify; }
+                            .centered-title { text-align: center; font-weight: bold; font-size: 16pt; margin-bottom: 20pt; }
+                            .signature-block { text-align: center; margin-top: 40pt; font-size: 10pt; }
+                            .signature-line { margin-top: 15pt; }
+                        </style>
+                    </head>
+                    <body>
+                        <p class="centered-title">${title}</p>
+                        <p>${formattedMainBody}</p>
+                        <div class="signature-block">
+                            ${signatures.split('\n').filter(line => line.trim() !== '').map(line => `<p class="signature-line">${line}</p>`).join('')}
+                        </div>
+                    </body>
+                    </html>
+                `;
+                
+                // Crear un Blob y descargarlo como .doc
+                const blob = new Blob([htmlContent], { type: 'application/msword' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'ContratoGenerado.doc'; // Nombre del archivo con extensión .doc
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url); // Libera el objeto URL
+
+                showMessageBox('Documento Word descargado con éxito.', 'success');
+
+            } catch (error) {
+                console.error("Error al generar o descargar el documento Word:", error);
+                showMessageBox('Ocurrió un error al descargar el documento Word. Asegúrate de que tu navegador lo permita.', 'error');
+            }
+        });
+
+        // Manejo del formulario de contacto (solo un placeholder para la demostración)
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showMessageBox('¡Mensaje enviado! Nos pondremos en contacto contigo pronto.', 'success');
+            this.reset();
+        });
+
+    </script>
+</body>
+</html>
